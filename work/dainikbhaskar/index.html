@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Case study: DainikBhaskar.ai — an AI learning platform / LMS by Shivansh Agarwal, built with FastAPI, Python and React, with Clerk authentication, Razorpay payments, fast video delivery, daily live lectures and load-tested scalability." />
+  <meta name="author" content="Shivansh Agarwal" />
+  <meta name="theme-color" content="#f5f1e8" />
+  <title>DainikBhaskar.ai — Case Study · Shivansh Agarwal</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="DainikBhaskar.ai — Case Study · Shivansh Agarwal" />
+  <meta property="og:description" content="An AI learning platform / LMS: FastAPI + Python + React, Clerk auth, Razorpay payments, fast video delivery, daily live lectures, load-tested for high concurrency." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DainikBhaskar.ai — Case Study · Shivansh Agarwal" />
+
+  <link rel="stylesheet" href="../../styles.css" />
+  <style>
+    .cs-main{width:var(--shell);margin-inline:auto}
+    .cs-back{display:inline-flex;align-items:center;gap:8px;margin:26px 0 0;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-underline-offset:6px}
+    .cs-back:hover{text-decoration:underline}
+
+    .cs-hero{padding:34px 0 56px;border-bottom:2px solid var(--ink)}
+    .cs-kicker{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--orange);margin:0 0 18px}
+    .cs-hero h1{font-size:clamp(50px,9vw,124px);line-height:.88;letter-spacing:-.055em;margin:0}
+    .cs-lead{font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,2.1vw,29px);line-height:1.32;max-width:920px;margin:26px 0 0}
+    .cs-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+    .cs-btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 22px;font-size:11px;font-weight:800;letter-spacing:.06em;text-decoration:none;border:2px solid var(--ink);transition:transform .2s ease}
+    .cs-btn:hover{transform:translateY(-2px)}
+    .cs-btn.solid{background:var(--ink);color:var(--paper)}
+    .cs-btn.ghost{background:transparent;color:var(--ink)}
+
+    .cs-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}
+    .cs-tags span{font-size:9px;font-weight:800;letter-spacing:.08em;padding:9px 13px;border-radius:999px;border:1px solid var(--line);font-family:monospace}
+
+    .cs-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:2px solid var(--ink)}
+    .cs-metrics div{padding:40px 26px 40px 0}
+    .cs-metrics div + div{padding-left:26px;border-left:1px solid var(--line)}
+    .cs-metrics strong{display:block;font-size:clamp(34px,4.6vw,58px);letter-spacing:-.06em;line-height:.9}
+    .cs-metrics span{display:block;margin-top:10px;font-size:11px;font-weight:700;line-height:1.35;color:var(--muted)}
+
+    .cs-section{padding:70px 0;border-bottom:1px solid var(--line)}
+    .cs-eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;margin:0 0 22px;color:var(--muted)}
+    .cs-section h2{font-size:clamp(30px,4vw,52px);letter-spacing:-.05em;line-height:.98;margin:0 0 24px}
+    .cs-section p.body{font-family:Georgia,serif;font-size:clamp(17px,1.7vw,22px);line-height:1.45;max-width:920px;margin:0 0 16px}
+
+    .cs-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:14px}
+    .cs-role{border:1.5px solid var(--ink);border-radius:16px;padding:26px}
+    .cs-role h3{font-size:20px;letter-spacing:-.03em;margin:8px 0 8px}
+    .cs-role .tag{font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--orange)}
+    .cs-role p{margin:0;font-size:14.5px;line-height:1.5;font-family:Georgia,serif}
+
+    .cs-stack .row{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line);align-items:baseline}
+    .cs-stack .row b{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .cs-stack .row p{margin:0;font-size:15px;line-height:1.4;font-family:Georgia,serif}
+
+    .cs-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 40px}
+    .cs-list li{position:relative;padding-left:22px;font-size:15.5px;line-height:1.45}
+    .cs-list li::before{content:"✦";position:absolute;left:0;color:var(--orange)}
+
+    .cs-nda{margin-top:8px;border:1.5px dashed var(--line);border-radius:14px;padding:22px 24px;font-family:Georgia,serif;font-size:15.5px;line-height:1.5;color:var(--muted);background:rgba(255,91,23,.04)}
+
+    .cs-foot{padding:70px 0 90px;text-align:center}
+    .cs-foot h2{font-size:clamp(34px,6vw,74px);letter-spacing:-.05em;line-height:.9;margin:0 0 30px}
+    .cs-foot .cs-cta{justify-content:center}
+
+    @media(max-width:900px){
+      .cs-metrics{grid-template-columns:repeat(2,1fr)}
+      .cs-metrics div,.cs-metrics div + div{border-left:0;padding:28px 18px}
+      .cs-grid3{grid-template-columns:1fr}
+      .cs-stack .row{grid-template-columns:1fr;gap:4px}
+      .cs-list{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar" id="top">
+    <a class="identity" href="../../index.html" aria-label="Shivansh Agarwal home">
+      <span class="identity-mark" aria-hidden="true">S</span>
+      <span>SHIVANSH AGARWAL</span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="../../index.html#work">WORK</a>
+      <a href="../../index.html#about">ABOUT</a>
+      <a href="../../index.html#experience">EXPERIENCE</a>
+      <a href="../../index.html#contact">CONTACT</a>
+      <a href="https://www.dainikbhaskar.ai/" target="_blank" rel="noreferrer">LIVE ↗</a>
+    </nav>
+    <div class="top-location"><span>✦ CASE STUDY</span><span>02 / 04</span></div>
+  </header>
+
+  <main class="cs-main">
+    <a class="cs-back" href="../../index.html#work">← Back to all work</a>
+
+    <section class="cs-hero">
+      <p class="cs-kicker">CASE STUDY 02 — AI LEARNING PLATFORM</p>
+      <h1>DainikBhaskar.ai</h1>
+      <p class="cs-lead">As part of the core team, I helped build the learning platform end to end — a custom LMS with courses, secure payments, daily live lectures and fast on-demand video. The backend runs on FastAPI, Fastify and Python with a React frontend, and was engineered to stay stable under heavy, high-concurrency traffic.</p>
+      <div class="cs-cta">
+        <a class="cs-btn solid" href="https://www.dainikbhaskar.ai/" target="_blank" rel="noreferrer">Visit the live platform ↗</a>
+        <a class="cs-btn ghost" href="../../index.html#contact">Get in touch →</a>
+      </div>
+      <div class="cs-tags">
+        <span>FASTAPI</span><span>FASTIFY</span><span>PYTHON</span><span>REACT</span><span>SQL · SQLALCHEMY</span><span>CLERK AUTH</span><span>RAZORPAY</span><span>VIDEO STREAMING</span><span>LOAD BALANCING</span><span>LOAD TESTING</span>
+      </div>
+    </section>
+
+    <section class="cs-metrics" aria-label="Key outcomes">
+      <div><strong>500+</strong><span>concurrent learners supported during peak usage</span></div>
+      <div><strong>20%</strong><span>faster content-fetching &amp; video-access flows</span></div>
+      <div><strong>30%</strong><span>reduction in system error rate</span></div>
+      <div><strong>10K+</strong><span>requests/sec target, load-tested behind a load balancer</span></div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">OVERVIEW</p>
+      <h2>A learning platform built to scale — from courses to live classes.</h2>
+      <p class="body">I designed and developed backend APIs and workflows for users, courses, payments, videos, live lectures, recordings and learning-content management. The goal was a platform that stays fast and dependable whether a learner is browsing a course, checking out securely, or joining a live class alongside thousands of others.</p>
+      <p class="body">Much of the work was building from scratch on the core team: shaping the LMS, integrating third-party services, hardening the backend, and turning ideas into working demos to show investors how the product should behave.</p>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">WHAT I BUILT</p>
+      <h2>The pieces behind the platform.</h2>
+      <div class="cs-grid3">
+        <div class="cs-role">
+          <span class="tag">LMS</span>
+          <h3>Custom learning system</h3>
+          <p>Courses, lessons, recordings and learning-content management — built from the ground up rather than bolted onto an off-the-shelf tool.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">AUTH</span>
+          <h3>Clerk authentication</h3>
+          <p>Secure sign-up and sign-in with Clerk, wired into the API so every user, course and payment action is properly authenticated.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">PAYMENTS</span>
+          <h3>Razorpay integration</h3>
+          <p>Integrated Razorpay for secure checkout and course payments, with clean transaction flows and reliable records.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">MEDIA</span>
+          <h3>Fast video delivery</h3>
+          <p>Videos are hosted and served through an optimized delivery path, so playback starts quickly with minimal delay across live and recorded sessions.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">LIVE</span>
+          <h3>Live lectures &amp; recordings</h3>
+          <p>Daily live classes plus recordings, made available in the platform so learners can join live or catch up later.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">SCALE</span>
+          <h3>Load-tested scalability</h3>
+          <p>APIs put behind a load balancer and load-tested for heavy concurrent traffic while keeping response times low and stable.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">ENGINEERING HIGHLIGHTS</p>
+      <h2>Optimized for speed and reliability.</h2>
+      <ul class="cs-list">
+        <li>Optimized content-fetching and video-access flows, cutting loading time by ~20% across live and recorded sessions.</li>
+        <li>Strengthened backend architecture, validation and error handling, reducing system error rates by ~30%.</li>
+        <li>Built scalable payment and multimedia API workflows that held up under peak usage without disruption.</li>
+        <li>Load-balanced and load-tested the platform for high-concurrency traffic with consistently low response times.</li>
+        <li>Managed and structured data carefully so content and media stay fast to query and serve.</li>
+        <li>Contributed as part of the core team, coding features from scratch and shipping to production.</li>
+      </ul>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">BEYOND THE LMS</p>
+      <h2>Demos, workflows and a second platform.</h2>
+      <p class="body">Alongside the learning platform, I built product demos and workflows from scratch to show investors how features should work — translating early product ideas into interactive, working prototypes.</p>
+      <p class="body">I also contributed to <strong>BBV (Bharat Bhagya Vidhata)</strong>, a second LMS, applying the same backend and platform experience to a different learning product.</p>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">TECH STACK</p>
+      <h2>What it's built with.</h2>
+      <div class="cs-stack">
+        <div class="row"><b>Backend</b><p>FastAPI, Fastify, Python — REST APIs and workflows</p></div>
+        <div class="row"><b>Frontend</b><p>React</p></div>
+        <div class="row"><b>Data</b><p>SQL with SQLAlchemy; careful schema and data management</p></div>
+        <div class="row"><b>Auth</b><p>Clerk authentication</p></div>
+        <div class="row"><b>Payments</b><p>Razorpay integration</p></div>
+        <div class="row"><b>Media</b><p>Hosted video with optimized delivery for live &amp; recorded lectures</p></div>
+        <div class="row"><b>Scale</b><p>Load balancing and load testing for high concurrency</p></div>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">A NOTE</p>
+      <p class="cs-nda">This project was built inside the company as part of the core team. Some product internals and additional work are proprietary and intentionally left out here — happy to talk through more of what I did in a conversation.</p>
+    </section>
+
+    <section class="cs-foot">
+      <h2>See it live.</h2>
+      <div class="cs-cta">
+        <a class="cs-btn solid" href="https://www.dainikbhaskar.ai/" target="_blank" rel="noreferrer">Visit DainikBhaskar.ai ↗</a>
+        <a class="cs-btn ghost" href="../../index.html#contact">Get in touch →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer section-shell">
+    <a href="../../index.html">← Back to portfolio</a>
+    <p>© <span data-year></span> Shivansh Agarwal</p>
+    <p>DainikBhaskar.ai — Case Study</p>
+  </footer>
+
+  <script>document.querySelectorAll('[data-year]').forEach(n => n.textContent = new Date().getFullYear());</script>
+</body>
+</html>

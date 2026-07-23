@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Case study: TalentForge — a production-style full-stack job portal by Shivansh Agarwal, built with Spring Boot, JWT security, MySQL and a React/Vite frontend, deployed on Railway and Vercel." />
+  <meta name="author" content="Shivansh Agarwal" />
+  <meta name="theme-color" content="#f5f1e8" />
+  <title>TalentForge — Case Study · Shivansh Agarwal</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="TalentForge — Case Study · Shivansh Agarwal" />
+  <meta property="og:description" content="A production-style full-stack job portal: Spring Boot API, JWT + role-based access, MySQL, React/Vite frontend, deployed on Railway and Vercel." />
+  <meta property="og:image" content="../../assets/talentforge/landing.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TalentForge — Case Study · Shivansh Agarwal" />
+  <meta name="twitter:image" content="../../assets/talentforge/landing.jpg" />
+
+  <link rel="stylesheet" href="../../styles.css" />
+  <style>
+    /* ---- Case study page (scoped) ---- */
+    .cs-main{width:var(--shell);margin-inline:auto}
+    .cs-back{display:inline-flex;align-items:center;gap:8px;margin:26px 0 0;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-underline-offset:6px}
+    .cs-back:hover{text-decoration:underline}
+
+    .cs-hero{padding:34px 0 56px;border-bottom:2px solid var(--ink)}
+    .cs-kicker{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--orange);margin:0 0 18px}
+    .cs-hero h1{font-size:clamp(58px,11vw,150px);line-height:.86;letter-spacing:-.06em;margin:0}
+    .cs-lead{font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,2.1vw,29px);line-height:1.32;max-width:900px;margin:26px 0 0}
+    .cs-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+    .cs-btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 22px;font-size:11px;font-weight:800;letter-spacing:.06em;text-decoration:none;border:2px solid var(--ink);transition:transform .2s ease}
+    .cs-btn:hover{transform:translateY(-2px)}
+    .cs-btn.solid{background:var(--ink);color:var(--paper)}
+    .cs-btn.ghost{background:transparent;color:var(--ink)}
+
+    .cs-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}
+    .cs-tags span{font-size:9px;font-weight:800;letter-spacing:.08em;padding:9px 13px;border-radius:999px;border:1px solid var(--line);font-family:monospace}
+
+    .cs-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:2px solid var(--ink)}
+    .cs-metrics div{padding:40px 26px 40px 0}
+    .cs-metrics div + div{padding-left:26px;border-left:1px solid var(--line)}
+    .cs-metrics strong{display:block;font-size:clamp(38px,5vw,62px);letter-spacing:-.06em;line-height:.9}
+    .cs-metrics span{display:block;margin-top:10px;font-size:11px;font-weight:700;line-height:1.35;color:var(--muted)}
+
+    .cs-section{padding:70px 0;border-bottom:1px solid var(--line)}
+    .cs-eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;margin:0 0 22px;color:var(--muted)}
+    .cs-section h2{font-size:clamp(30px,4vw,52px);letter-spacing:-.05em;line-height:.98;margin:0 0 24px}
+    .cs-section p.body{font-family:Georgia,serif;font-size:clamp(17px,1.7vw,22px);line-height:1.45;max-width:920px;margin:0 0 16px}
+
+    .cs-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:14px}
+    .cs-role{border:1.5px solid var(--ink);border-radius:16px;padding:26px}
+    .cs-role h3{font-size:20px;letter-spacing:-.03em;margin:0 0 8px}
+    .cs-role .tag{font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--orange)}
+    .cs-role ul{margin:16px 0 0;padding:0;list-style:none}
+    .cs-role li{position:relative;padding-left:18px;margin:9px 0;font-size:14px;line-height:1.4}
+    .cs-role li::before{content:"→";position:absolute;left:0;color:var(--orange);font-weight:800}
+
+    .cs-stack{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 40px;margin-top:8px}
+    .cs-stack .row{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line);align-items:baseline}
+    .cs-stack .row b{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .cs-stack .row p{margin:0;font-size:15px;line-height:1.4;font-family:Georgia,serif}
+
+    .cs-flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:8px;font-size:12px;font-weight:800;letter-spacing:.03em}
+    .cs-flow span{border:1.5px solid var(--ink);border-radius:10px;padding:12px 15px;background:#fff}
+    .cs-flow i{color:var(--orange);font-style:normal;font-weight:900}
+    .cs-note{font-family:Georgia,serif;font-size:15px;color:var(--muted);margin-top:18px}
+
+    .cs-api{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px}
+    .cs-api th,.cs-api td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+    .cs-api th{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .cs-api td:first-child{font-weight:800;white-space:nowrap;width:160px}
+    .cs-api code{font-family:monospace;font-size:12px;background:rgba(8,8,8,.05);padding:2px 6px;border-radius:5px;display:inline-block;margin:2px 4px 2px 0}
+
+    .cs-security{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 40px}
+    .cs-security li{position:relative;padding-left:22px;font-size:15px;line-height:1.4}
+    .cs-security li::before{content:"✦";position:absolute;left:0;color:var(--orange)}
+
+    .cs-shots{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:8px}
+    .cs-shots figure{margin:0;border:1.5px solid var(--ink);border-radius:14px;overflow:hidden;background:#fff;cursor:zoom-in}
+    .cs-shots .shot{overflow:hidden;border-bottom:1px solid var(--line)}
+    .cs-shots img{width:100%;height:auto;display:block;transition:transform .35s ease;transform-origin:center center}
+    .cs-shots figure:hover img{transform:scale(2)}
+    @media(prefers-reduced-motion:reduce){.cs-shots img{transition:none}.cs-shots figure:hover img{transform:none}}
+    @media(hover:none){.cs-shots figure{cursor:default}.cs-shots figure:hover img{transform:none}}
+    .cs-shots figcaption{padding:12px 15px;font-size:12px;font-weight:700;line-height:1.35}
+    .cs-shots figcaption b{display:block;color:var(--orange);font-size:9px;font-weight:800;letter-spacing:.12em;margin-bottom:4px}
+    .cs-shots figure.wide{grid-column:1 / -1}
+
+    .cs-foot{padding:70px 0 90px;text-align:center}
+    .cs-foot h2{font-size:clamp(34px,6vw,74px);letter-spacing:-.05em;line-height:.9;margin:0 0 30px}
+    .cs-foot .cs-cta{justify-content:center}
+
+    @media(max-width:900px){
+      .cs-metrics{grid-template-columns:repeat(2,1fr)}
+      .cs-metrics div,.cs-metrics div + div{border-left:0;padding:28px 18px}
+      .cs-grid3{grid-template-columns:1fr}
+      .cs-stack{grid-template-columns:1fr}
+      .cs-security{grid-template-columns:1fr}
+      .cs-shots{grid-template-columns:1fr}
+      .cs-api td:first-child{width:auto}
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar" id="top">
+    <a class="identity" href="../../index.html" aria-label="Shivansh Agarwal home">
+      <span class="identity-mark" aria-hidden="true">S</span>
+      <span>SHIVANSH AGARWAL</span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="../../index.html#work">WORK</a>
+      <a href="../../index.html#about">ABOUT</a>
+      <a href="../../index.html#experience">EXPERIENCE</a>
+      <a href="../../index.html#contact">CONTACT</a>
+      <a href="https://github.com/shivanshagarwal10/TalentForge" target="_blank" rel="noreferrer">GITHUB ↗</a>
+    </nav>
+    <div class="top-location"><span>✦ CASE STUDY</span><span>01 / 04</span></div>
+  </header>
+
+  <main class="cs-main">
+    <a class="cs-back" href="../../index.html#work">← Back to all work</a>
+
+    <section class="cs-hero">
+      <p class="cs-kicker">CASE STUDY 01 — BACKEND PLATFORM</p>
+      <h1>TalentForge</h1>
+      <p class="cs-lead">A production-style, full-stack job portal built around a secure Spring Boot API and a React/Vite frontend. It supports job discovery, applications, employer job management and admin workflows — with JWT authentication, role-based access control, real MySQL persistence, and live cloud deployment on Railway and Vercel.</p>
+      <div class="cs-cta">
+        <a class="cs-btn solid" href="https://talent-forge-smoky.vercel.app/" target="_blank" rel="noreferrer">Live demo ↗</a>
+        <a class="cs-btn ghost" href="https://github.com/shivanshagarwal10/TalentForge" target="_blank" rel="noreferrer">View source on GitHub ↗</a>
+        <a class="cs-btn ghost" href="https://talentforge-production-10fe.up.railway.app/" target="_blank" rel="noreferrer">Backend API ↗</a>
+      </div>
+      <div class="cs-tags">
+        <span>JAVA 25</span><span>SPRING BOOT 4</span><span>SPRING SECURITY</span><span>JWT</span><span>SPRING DATA JPA</span><span>MYSQL</span><span>REACT 19</span><span>VITE 7</span><span>REDUX TOOLKIT</span><span>DOCKER</span><span>RAILWAY</span><span>VERCEL</span>
+      </div>
+    </section>
+
+    <section class="cs-metrics" aria-label="Key outcomes">
+      <div><strong>95%</strong><span>fewer unauthorized access attempts via JWT authentication</span></div>
+      <div><strong>40%</strong><span>higher job posting &amp; application processing efficiency</span></div>
+      <div><strong>3</strong><span>distinct role experiences: seeker, employer, admin</span></div>
+      <div><strong>Live</strong><span>deployed end-to-end on Railway + Vercel</span></div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">OVERVIEW</p>
+      <h2>A complete hiring workflow, engineered like a real product.</h2>
+      <p class="body">TalentForge covers the full job-portal lifecycle — browse jobs and companies, save and apply, manage a profile with document uploads, and withdraw applications — while giving employers a console to post jobs and review applicants, and admins the tools to manage companies, promote users and handle contact messages.</p>
+      <p class="body">The backend is organized into clear domains (auth, security, job, company, user, contact) with a service layer, JPA repositories, Caffeine caching, and observability through Spring Boot Actuator, structured logging and OpenTelemetry. The result is a codebase that reads and behaves like a maintainable production service rather than a demo.</p>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">ROLES &amp; CAPABILITIES</p>
+      <h2>Three protected experiences, one system.</h2>
+      <div class="cs-grid3">
+        <div class="cs-role">
+          <span class="tag">ROLE 01</span>
+          <h3>Job Seeker</h3>
+          <ul>
+            <li>Register and sign in securely</li>
+            <li>Browse active jobs and company profiles</li>
+            <li>View full job detail: salary, work mode, deadline</li>
+            <li>Save and unsave jobs</li>
+            <li>Apply and withdraw applications</li>
+            <li>Complete a profile with picture &amp; resume upload</li>
+            <li>Track profile completeness before applying</li>
+          </ul>
+        </div>
+        <div class="cs-role">
+          <span class="tag">ROLE 02</span>
+          <h3>Employer</h3>
+          <ul>
+            <li>Sign in with employer access</li>
+            <li>Post new job openings</li>
+            <li>View all company jobs</li>
+            <li>Update job status</li>
+            <li>View applicants for a job</li>
+            <li>Review application status</li>
+          </ul>
+        </div>
+        <div class="cs-role">
+          <span class="tag">ROLE 03</span>
+          <h3>Admin</h3>
+          <ul>
+            <li>Create, update and delete companies</li>
+            <li>Search users by email</li>
+            <li>Promote a user to employer</li>
+            <li>Assign an employer to a company</li>
+            <li>View and manage contact messages</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">ARCHITECTURE</p>
+      <h2>Layered backend, decoupled frontend.</h2>
+      <div class="cs-flow">
+        <span>React + Vite</span><i>→ Axios · JWT · CSRF →</i>
+        <span>Spring Boot API</span><i>→</i>
+        <span>Spring Security</span><i>→</i>
+        <span>Service Layer</span><i>→</i>
+        <span>JPA Repositories</span><i>→</i>
+        <span>MySQL</span>
+      </div>
+      <p class="cs-note">Cross-cutting: Caffeine cache · Spring Boot Actuator · Logback · OpenTelemetry · Grafana LGTM (Docker Compose). Deployed with the frontend on Vercel and the backend + MySQL on Railway.</p>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">TECH STACK</p>
+      <h2>What it's built with.</h2>
+      <div class="cs-stack">
+        <div class="row"><b>Frontend</b><p>React 19, Vite 7, React Router, Redux Toolkit, Axios, Tailwind CSS</p></div>
+        <div class="row"><b>Backend</b><p>Java 25, Spring Boot 4, Spring MVC, Spring Security, Spring Data JPA, Validation, Actuator</p></div>
+        <div class="row"><b>Database</b><p>MySQL, with H2 for local and test support</p></div>
+        <div class="row"><b>Auth</b><p>JWT, BCrypt password hashing, CSRF token endpoint</p></div>
+        <div class="row"><b>Observability</b><p>Actuator, Logback, OpenTelemetry, Grafana LGTM via Docker Compose</p></div>
+        <div class="row"><b>Deployment</b><p>Railway (backend + MySQL), Vercel (frontend), Docker</p></div>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">API OVERVIEW</p>
+      <h2>Representative endpoints.</h2>
+      <p class="body">All backend routes are exposed under the <code>/api</code> path, with public, jobseeker, employer and admin scopes enforced by Spring Security.</p>
+      <table class="cs-api">
+        <thead><tr><th>Domain</th><th>Example endpoints</th></tr></thead>
+        <tbody>
+          <tr><td>Auth</td><td><code>POST /api/auth/login/public</code><code>POST /api/auth/register/public</code></td></tr>
+          <tr><td>CSRF</td><td><code>GET /api/csrf-token/public</code></td></tr>
+          <tr><td>Companies</td><td><code>GET /api/companies/public</code><code>POST /api/companies/admin</code></td></tr>
+          <tr><td>Jobs</td><td><code>GET /api/jobs</code><code>POST /api/jobs/employer</code><code>PATCH /api/jobs/{id}/status/employer</code></td></tr>
+          <tr><td>Profiles</td><td><code>GET /api/users/profile/jobseeker</code><code>PUT /api/users/profile/jobseeker</code></td></tr>
+          <tr><td>Applications</td><td><code>POST /api/users/job-applications/jobseeker</code><code>GET /api/users/job-applications/jobseeker</code></td></tr>
+          <tr><td>Admin</td><td><code>GET /api/users/search/admin</code><code>PATCH /api/users/{userId}/company/{companyId}/admin</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">SECURITY</p>
+      <h2>Production-ready security pieces.</h2>
+      <ul class="cs-security">
+        <li>JWT-authenticated requests with Spring Security filters</li>
+        <li>CSRF token flow via <code>/api/csrf-token/public</code></li>
+        <li>Role-based authorization across seeker, employer &amp; admin</li>
+        <li>Secure, configurable CORS origins</li>
+        <li>BCrypt password hashing and validation</li>
+        <li>Secrets kept in Railway/Vercel environment variables</li>
+      </ul>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">SCREENS</p>
+      <h2>A look at the product.</h2>
+      <div class="cs-shots">
+        <figure class="wide">
+          <img src="../../assets/talentforge/landing.jpg" alt="TalentForge landing page — Find Your Dream Job Today" loading="lazy" />
+          <figcaption><b>PUBLIC</b>Landing — search across thousands of live jobs</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/featured-jobs.jpg" alt="TalentForge featured jobs listing with filters" loading="lazy" />
+          <figcaption><b>PUBLIC</b>Job discovery with category filters</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/companies.jpg" alt="TalentForge company directory — top companies hiring" loading="lazy" />
+          <figcaption><b>PUBLIC</b>Company directory</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/job-detail.jpg" alt="TalentForge job detail — requirements, benefits and salary" loading="lazy" />
+          <figcaption><b>PUBLIC</b>Job detail — requirements, benefits, salary</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/apply.jpg" alt="TalentForge apply modal with cover letter" loading="lazy" />
+          <figcaption><b>JOB SEEKER</b>Apply with a cover letter</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/applied-jobs.jpg" alt="TalentForge applied jobs tracking with status" loading="lazy" />
+          <figcaption><b>JOB SEEKER</b>Application tracking &amp; status</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/saved-jobs.jpg" alt="TalentForge saved jobs list" loading="lazy" />
+          <figcaption><b>JOB SEEKER</b>Saved jobs</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/profile.jpg" alt="TalentForge profile with resume and picture upload" loading="lazy" />
+          <figcaption><b>JOB SEEKER</b>Profile — resume &amp; picture upload</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/post-job.jpg" alt="TalentForge employer post a new job form" loading="lazy" />
+          <figcaption><b>EMPLOYER</b>Post a new job</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/posted-jobs.jpg" alt="TalentForge employer posted jobs management" loading="lazy" />
+          <figcaption><b>EMPLOYER</b>Manage postings &amp; applicants</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/admin-companies.jpg" alt="TalentForge admin company management console" loading="lazy" />
+          <figcaption><b>ADMIN</b>Company management</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/talentforge/admin-roles.jpg" alt="TalentForge admin promote user to employer" loading="lazy" />
+          <figcaption><b>ADMIN</b>Promote users &amp; assign companies</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="cs-foot">
+      <h2>Want to see it running?</h2>
+      <div class="cs-cta">
+        <a class="cs-btn solid" href="https://talent-forge-smoky.vercel.app/" target="_blank" rel="noreferrer">Open the live demo ↗</a>
+        <a class="cs-btn ghost" href="https://github.com/shivanshagarwal10/TalentForge" target="_blank" rel="noreferrer">Read the code ↗</a>
+        <a class="cs-btn ghost" href="../../index.html#contact">Get in touch →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer section-shell">
+    <a href="../../index.html">← Back to portfolio</a>
+    <p>© <span data-year></span> Shivansh Agarwal</p>
+    <p>TalentForge — Case Study</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('[data-year]').forEach(n => n.textContent = new Date().getFullYear());
+
+    // Magnifier: zoom into the exact spot under the cursor on each screenshot
+    if (matchMedia('(hover:hover)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
+      document.querySelectorAll('.cs-shots figure').forEach(fig => {
+        const img = fig.querySelector('img');
+        fig.addEventListener('pointermove', event => {
+          const r = fig.getBoundingClientRect();
+          const x = ((event.clientX - r.left) / r.width) * 100;
+          const y = ((event.clientY - r.top) / r.height) * 100;
+          img.style.transformOrigin = `${x}% ${y}%`;
+        });
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Case study: a real-time AI conversation platform by Shivansh Agarwal (MarConPra, Application Developer) — live speech capture, AssemblyAI transcription, LLM tone classification and streaming AI responses over WebSockets, with a React Native / Expo console." />
+  <meta name="author" content="Shivansh Agarwal" />
+  <meta name="theme-color" content="#f5f1e8" />
+  <title>AI Conversation Platform — Case Study · Shivansh Agarwal</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="AI Conversation Platform — Case Study · Shivansh Agarwal" />
+  <meta property="og:description" content="Real-time speech, tone analysis and live AI responses: FastAPI + WebSockets, AssemblyAI, LLMs, React Native / Expo." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI Conversation Platform — Case Study · Shivansh Agarwal" />
+
+  <link rel="stylesheet" href="../../styles.css" />
+  <style>
+    .cs-main{width:var(--shell);margin-inline:auto}
+    .cs-back{display:inline-flex;align-items:center;gap:8px;margin:26px 0 0;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-underline-offset:6px}
+    .cs-back:hover{text-decoration:underline}
+    .cs-hero{padding:34px 0 56px;border-bottom:2px solid var(--ink)}
+    .cs-kicker{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--orange);margin:0 0 18px}
+    .cs-hero h1{font-size:clamp(46px,8.2vw,116px);line-height:.9;letter-spacing:-.05em;margin:0}
+    .cs-lead{font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,2.1vw,29px);line-height:1.32;max-width:920px;margin:26px 0 0}
+    .cs-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+    .cs-btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 22px;font-size:11px;font-weight:800;letter-spacing:.06em;text-decoration:none;border:2px solid var(--ink);transition:transform .2s ease}
+    .cs-btn:hover{transform:translateY(-2px)}
+    .cs-btn.solid{background:var(--ink);color:var(--paper)}
+    .cs-btn.ghost{background:transparent;color:var(--ink)}
+    .cs-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}
+    .cs-tags span{font-size:9px;font-weight:800;letter-spacing:.08em;padding:9px 13px;border-radius:999px;border:1px solid var(--line);font-family:monospace}
+    .cs-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:2px solid var(--ink)}
+    .cs-metrics div{padding:40px 26px 40px 0}
+    .cs-metrics div + div{padding-left:26px;border-left:1px solid var(--line)}
+    .cs-metrics strong{display:block;font-size:clamp(32px,4.4vw,56px);letter-spacing:-.06em;line-height:.9}
+    .cs-metrics span{display:block;margin-top:10px;font-size:11px;font-weight:700;line-height:1.35;color:var(--muted)}
+    .cs-section{padding:70px 0;border-bottom:1px solid var(--line)}
+    .cs-eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;margin:0 0 22px;color:var(--muted)}
+    .cs-section h2{font-size:clamp(30px,4vw,52px);letter-spacing:-.05em;line-height:.98;margin:0 0 24px}
+    .cs-section p.body{font-family:Georgia,serif;font-size:clamp(17px,1.7vw,22px);line-height:1.45;max-width:920px;margin:0 0 16px}
+    .cs-flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:8px;font-size:12px;font-weight:800;letter-spacing:.02em}
+    .cs-flow span{border:1.5px solid var(--ink);border-radius:10px;padding:12px 15px;background:#fff}
+    .cs-flow i{color:var(--orange);font-style:normal;font-weight:900}
+    .cs-note{font-family:Georgia,serif;font-size:15px;color:var(--muted);margin-top:18px}
+    .cs-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:14px}
+    .cs-role{border:1.5px solid var(--ink);border-radius:16px;padding:26px}
+    .cs-role h3{font-size:20px;letter-spacing:-.03em;margin:8px 0 8px}
+    .cs-role .tag{font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--orange)}
+    .cs-role p{margin:0;font-size:14.5px;line-height:1.5;font-family:Georgia,serif}
+    .cs-stack .row{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line);align-items:baseline}
+    .cs-stack .row b{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .cs-stack .row p{margin:0;font-size:15px;line-height:1.4;font-family:Georgia,serif}
+    .cs-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 40px}
+    .cs-list li{position:relative;padding-left:22px;font-size:15.5px;line-height:1.45}
+    .cs-list li::before{content:"✦";position:absolute;left:0;color:var(--orange)}
+    .cs-nda{margin-top:8px;border:1.5px dashed var(--line);border-radius:14px;padding:22px 24px;font-family:Georgia,serif;font-size:15.5px;line-height:1.5;color:var(--muted);background:rgba(255,91,23,.04)}
+    .cs-foot{padding:70px 0 90px;text-align:center}
+    .cs-foot h2{font-size:clamp(34px,6vw,74px);letter-spacing:-.05em;line-height:.9;margin:0 0 30px}
+    .cs-foot .cs-cta{justify-content:center}
+    @media(max-width:900px){
+      .cs-metrics{grid-template-columns:repeat(2,1fr)}
+      .cs-metrics div,.cs-metrics div + div{border-left:0;padding:28px 18px}
+      .cs-grid3{grid-template-columns:1fr}.cs-stack .row{grid-template-columns:1fr;gap:4px}.cs-list{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar" id="top">
+    <a class="identity" href="../../index.html" aria-label="Shivansh Agarwal home">
+      <span class="identity-mark" aria-hidden="true">S</span>
+      <span>SHIVANSH AGARWAL</span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="../../index.html#work">WORK</a>
+      <a href="../../index.html#about">ABOUT</a>
+      <a href="../../index.html#experience">EXPERIENCE</a>
+      <a href="../../index.html#contact">CONTACT</a>
+    </nav>
+    <div class="top-location"><span>✦ CASE STUDY</span><span>03 / 04</span></div>
+  </header>
+
+  <main class="cs-main">
+    <a class="cs-back" href="../../index.html#work">← Back to all work</a>
+
+    <section class="cs-hero">
+      <p class="cs-kicker">CASE STUDY 03 — REAL-TIME AI</p>
+      <h1>AI Conversation Platform</h1>
+      <p class="cs-lead">As an Application Developer in MarConPra's Media Management Division, I built a real-time AI conversation product: it captures live speech, transcribes it, reads the tone, and streams back AI-suggested responses in under a third of a second — all delivered to a React Native console over WebSockets.</p>
+      <div class="cs-cta">
+        <a class="cs-btn solid" href="../../index.html#contact">Ask me about it →</a>
+      </div>
+      <div class="cs-tags">
+        <span>PYTHON</span><span>FASTAPI</span><span>FASTIFY</span><span>WEBSOCKETS</span><span>REACT NATIVE</span><span>EXPO</span><span>ASSEMBLYAI</span><span>LLMs</span><span>STREAMING APIs</span><span>ASYNC</span>
+      </div>
+    </section>
+
+    <section class="cs-metrics" aria-label="Key outcomes">
+      <div><strong>&lt;300ms</strong><span>AI response latency, end to end</span></div>
+      <div><strong>30%</strong><span>faster AI pipeline through end-to-end optimization</span></div>
+      <div><strong>30+</strong><span>product demonstrations powered by the platform</span></div>
+      <div><strong>15</strong><span>multi-role conversation flows integrated</span></div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">OVERVIEW</p>
+      <h2>Turning live speech into intelligent, real-time responses.</h2>
+      <p class="body">The product listens to a live conversation, transcribes it as it happens, classifies the speaker's tone, and generates helpful AI responses that appear on screen almost instantly. My focus was architecting the streaming backend and the pipeline that ties speech, transcription and language models together, and delivering it through a cross-platform mobile console.</p>
+      <p class="body">Because it was used live in front of stakeholders and prospective clients, everything had to feel immediate and stay reliable — no awkward pauses, dropped connections or stale transcripts.</p>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">HOW IT WORKS</p>
+      <h2>The real-time pipeline.</h2>
+      <div class="cs-flow">
+        <span>Live audio capture</span><i>→</i>
+        <span>AssemblyAI streaming transcription</span><i>→</i>
+        <span>LLM tone &amp; response</span><i>→</i>
+        <span>WebSocket broadcast</span><i>→</i>
+        <span>React Native console</span>
+      </div>
+      <p class="cs-note">Every stage runs asynchronously so audio, transcript and AI output move through the system without blocking one another — which is what keeps end-to-end latency under ~300ms.</p>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">WHAT I BUILT</p>
+      <h2>The pieces behind the product.</h2>
+      <div class="cs-grid3">
+        <div class="cs-role">
+          <span class="tag">BACKEND</span>
+          <h3>Streaming backend</h3>
+          <p>FastAPI and WebSocket services to stream speech, AI responses and real-time updates with bi-directional, event-driven communication.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">SPEECH</span>
+          <h3>Speech pipeline</h3>
+          <p>Live audio capture and streaming transcription via AssemblyAI, with synchronized, continuously-updating transcripts.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">AI</span>
+          <h3>LLM integration</h3>
+          <p>Transcripts run through LLMs for tone classification and response generation, with prompt/context engineering and multi-turn handling.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">MOBILE</span>
+          <h3>React Native console</h3>
+          <p>A cross-platform React Native + Expo console for driving conversations, showing live transcripts, tones and AI suggestions.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">CONNECTIONS</span>
+          <h3>Session &amp; connection handling</h3>
+          <p>Connection management, auto-reconnection and session handling so a live demo keeps flowing even through network hiccups.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">PERFORMANCE</span>
+          <h3>Latency optimization</h3>
+          <p>End-to-end pipeline tuning across capture, transcription and LLM inference — cutting AI processing time by ~30%.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">ENGINEERING HIGHLIGHTS</p>
+      <h2>What made it work in real time.</h2>
+      <ul class="cs-list">
+        <li>Architected FastAPI + WebSocket services to stream speech, AI responses and updates across 30+ live product demos.</li>
+        <li>Built an AI-driven React Native console with Expo, integrating AssemblyAI transcription and LLM tone classification.</li>
+        <li>Implemented 15 multi-role conversation flows with speaker context, role switching and conversation tracking.</li>
+        <li>Reduced AI processing time by ~30% through async execution and end-to-end pipeline optimization.</li>
+        <li>Kept end-to-end response latency under ~300ms for a natural, live feel.</li>
+        <li>Handled production realities — WebSocket disconnects, AI-response issues and mobile bugs — with root-cause fixes before demos.</li>
+      </ul>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">ROLE</p>
+      <h2>Application Developer, Media Management Division.</h2>
+      <p class="body">I worked across backend, real-time systems, AI integration and the mobile console, collaborating with AI engineers, designers and the product team to take features from idea to a working, demo-ready product — and to keep them running smoothly when it mattered most, live in front of an audience.</p>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">TECH STACK</p>
+      <h2>What it's built with.</h2>
+      <div class="cs-stack">
+        <div class="row"><b>Backend</b><p>Python, FastAPI, Fastify — REST APIs and async services</p></div>
+        <div class="row"><b>Real-time</b><p>WebSockets, event-driven streaming, connection management</p></div>
+        <div class="row"><b>Speech</b><p>AssemblyAI streaming transcription, live audio processing</p></div>
+        <div class="row"><b>AI</b><p>LLMs for tone classification and response generation; prompt &amp; context engineering</p></div>
+        <div class="row"><b>Mobile</b><p>React Native, Expo</p></div>
+        <div class="row"><b>Practices</b><p>Async programming, performance optimization, production debugging, Git</p></div>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">A NOTE</p>
+      <p class="cs-nda">This was internal product work at MarConPra. Some details are proprietary and intentionally left out here — I'm happy to walk through the architecture and my specific contributions in a conversation.</p>
+    </section>
+
+    <section class="cs-foot">
+      <h2>Curious how it works?</h2>
+      <div class="cs-cta">
+        <a class="cs-btn solid" href="../../index.html#contact">Get in touch →</a>
+        <a class="cs-btn ghost" href="../../index.html#work">See other work →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer section-shell">
+    <a href="../../index.html">← Back to portfolio</a>
+    <p>© <span data-year></span> Shivansh Agarwal</p>
+    <p>AI Conversation Platform — Case Study</p>
+  </footer>
+
+  <script>document.querySelectorAll('[data-year]').forEach(n => n.textContent = new Date().getFullYear());</script>
+</body>
+</html>
