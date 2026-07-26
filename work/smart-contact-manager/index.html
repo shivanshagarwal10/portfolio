@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Case study: Smart Contact Manager by Shivansh Agarwal — a full-stack Spring Boot app to manage personal and professional contacts with OAuth2 login, email verification, cloud image storage, email sending, search, export and dark mode. Built during the Euonus IT internship." />
+  <meta name="description" content="Case study: Smart Contact Manager by Shivansh Agarwal - a full-stack Spring Boot and React contact platform with duplicate merging, relationship graphs, reconnect workflows, TOTP 2FA, OAuth, Docker deployment and production demo mode." />
   <meta name="author" content="Shivansh Agarwal" />
   <meta name="theme-color" content="#f5f1e8" />
-  <title>Smart Contact Manager — Case Study · Shivansh Agarwal</title>
+  <title>Smart Contact Manager - Case Study · Shivansh Agarwal</title>
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
 
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Smart Contact Manager — Case Study · Shivansh Agarwal" />
-  <meta property="og:description" content="A full-stack Spring Boot contact manager: OAuth2 login, email verification, Cloudinary/S3 image upload, JavaMail email sending, search, export and dark mode." />
+  <meta property="og:title" content="Smart Contact Manager - Case Study · Shivansh Agarwal" />
+  <meta property="og:description" content="A production-style full-stack contact platform: Spring Boot 3.4, Java 21, React 19, MySQL, TOTP 2FA, duplicate merging, relationship graphs and Docker deployment." />
+  <meta property="og:image" content="../../assets/smart-contact-manager/dashboard.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Smart Contact Manager — Case Study · Shivansh Agarwal" />
+  <meta name="twitter:title" content="Smart Contact Manager - Case Study · Shivansh Agarwal" />
+  <meta name="twitter:image" content="../../assets/smart-contact-manager/dashboard.png" />
 
   <link rel="stylesheet" href="../../styles.css" />
   <style>
@@ -22,8 +24,8 @@
     .cs-back:hover{text-decoration:underline}
     .cs-hero{padding:34px 0 56px;border-bottom:2px solid var(--ink)}
     .cs-kicker{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--orange);margin:0 0 18px}
-    .cs-hero h1{font-size:clamp(42px,7.4vw,104px);line-height:.9;letter-spacing:-.05em;margin:0}
-    .cs-lead{font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,2.1vw,29px);line-height:1.32;max-width:920px;margin:26px 0 0}
+    .cs-hero h1{font-size:clamp(42px,7.4vw,108px);line-height:.9;letter-spacing:-.05em;margin:0;max-width:1180px}
+    .cs-lead{font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,2.1vw,29px);line-height:1.32;max-width:960px;margin:26px 0 0}
     .cs-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
     .cs-btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 22px;font-size:11px;font-weight:800;letter-spacing:.06em;text-decoration:none;border:2px solid var(--ink);transition:transform .2s ease}
     .cs-btn:hover{transform:translateY(-2px)}
@@ -34,18 +36,30 @@
     .cs-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:2px solid var(--ink)}
     .cs-metrics div{padding:40px 26px 40px 0}
     .cs-metrics div + div{padding-left:26px;border-left:1px solid var(--line)}
-    .cs-metrics strong{display:block;font-size:clamp(30px,4.2vw,52px);letter-spacing:-.05em;line-height:.92}
+    .cs-metrics strong{display:block;font-size:clamp(32px,4.4vw,56px);letter-spacing:-.06em;line-height:.9}
     .cs-metrics span{display:block;margin-top:10px;font-size:11px;font-weight:700;line-height:1.35;color:var(--muted)}
     .cs-section{padding:70px 0;border-bottom:1px solid var(--line)}
     .cs-eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;margin:0 0 22px;color:var(--muted)}
     .cs-section h2{font-size:clamp(30px,4vw,52px);letter-spacing:-.05em;line-height:.98;margin:0 0 24px}
-    .cs-section p.body{font-family:Georgia,serif;font-size:clamp(17px,1.7vw,22px);line-height:1.45;max-width:920px;margin:0 0 16px}
+    .cs-section p.body{font-family:Georgia,serif;font-size:clamp(17px,1.7vw,22px);line-height:1.45;max-width:930px;margin:0 0 16px}
+    .cs-hero-shot{margin:34px 0 0;border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 28px 70px rgba(8,8,8,.14)}
+    .cs-hero-shot img{width:100%;height:auto}
     .cs-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:14px}
-    .cs-role{border:1.5px solid var(--ink);border-radius:16px;padding:26px}
+    .cs-role{border:1.5px solid var(--ink);border-radius:16px;padding:26px;background:rgba(255,255,255,.42)}
     .cs-role h3{font-size:20px;letter-spacing:-.03em;margin:8px 0 8px}
     .cs-role .tag{font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--orange)}
     .cs-role p{margin:0;font-size:14.5px;line-height:1.5;font-family:Georgia,serif}
-    .cs-stack .row{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line);align-items:baseline}
+    .cs-shots{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:8px}
+    .cs-shots figure{margin:0;border:1.5px solid var(--ink);border-radius:14px;overflow:hidden;background:#fff}
+    .cs-shots img{width:100%;height:auto}
+    .cs-shots figcaption{padding:12px 15px;font-size:12px;font-weight:700;line-height:1.35}
+    .cs-shots figcaption b{display:block;color:var(--orange);font-size:9px;font-weight:800;letter-spacing:.12em;margin-bottom:4px}
+    .cs-shots figure.wide{grid-column:1 / -1}
+    .cs-flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:8px;font-size:12px;font-weight:800;letter-spacing:.03em}
+    .cs-flow span{border:1.5px solid var(--ink);border-radius:10px;padding:12px 15px;background:#fff}
+    .cs-flow i{color:var(--orange);font-style:normal;font-weight:900}
+    .cs-note{font-family:Georgia,serif;font-size:15px;color:var(--muted);margin-top:18px;max-width:860px}
+    .cs-stack .row{display:grid;grid-template-columns:180px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line);align-items:baseline}
     .cs-stack .row b{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
     .cs-stack .row p{margin:0;font-size:15px;line-height:1.4;font-family:Georgia,serif}
     .cs-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 40px}
@@ -57,7 +71,10 @@
     @media(max-width:900px){
       .cs-metrics{grid-template-columns:repeat(2,1fr)}
       .cs-metrics div,.cs-metrics div + div{border-left:0;padding:28px 18px}
-      .cs-grid3{grid-template-columns:1fr}.cs-stack .row{grid-template-columns:1fr;gap:4px}.cs-list{grid-template-columns:1fr}
+      .cs-grid3,.cs-shots{grid-template-columns:1fr}
+      .cs-stack .row{grid-template-columns:1fr;gap:4px}
+      .cs-list{grid-template-columns:1fr}
+      .cs-shots figure.wide{grid-column:auto}
     }
   </style>
 </head>
@@ -83,101 +100,165 @@
     <a class="cs-back" href="../../index.html#work">← Back to all work</a>
 
     <section class="cs-hero">
-      <p class="cs-kicker">CASE STUDY 04 — FULL-STACK JAVA APP</p>
+      <p class="cs-kicker">CASE STUDY 04 - FULL-STACK PRODUCT</p>
       <h1>Smart Contact Manager</h1>
-      <p class="cs-lead">A full-stack web application for managing personal and professional contacts — with secure authentication, cloud image storage, email integration and a modern UI. Built with Spring Boot during my internship at Euonus IT as part of my B.Tech program.</p>
+      <p class="cs-lead">A production-style contact intelligence platform built to do more than store names. It detects duplicate records, shows who you are losing touch with, maps relationship clusters, automates tagging and reminders, and protects the account with serious authentication and endpoint ownership checks.</p>
       <div class="cs-cta">
-        <a class="cs-btn solid" href="https://github.com/shivanshagarwal10/smart-contact-manager" target="_blank" rel="noreferrer">View source on GitHub ↗</a>
-        <a class="cs-btn ghost" href="../../index.html#contact">Get in touch →</a>
+        <a class="cs-btn solid" href="https://smart-contact-manager-production-9f25.up.railway.app" target="_blank" rel="noreferrer">Live demo ↗</a>
+        <a class="cs-btn ghost" href="https://github.com/shivanshagarwal10/smart-contact-manager" target="_blank" rel="noreferrer">View source on GitHub ↗</a>
       </div>
       <div class="cs-tags">
-        <span>JAVA 17</span><span>SPRING BOOT</span><span>SPRING SECURITY</span><span>SPRING DATA JPA</span><span>OAUTH2</span><span>THYMELEAF</span><span>TAILWIND CSS</span><span>MYSQL</span><span>JAVAMAIL</span><span>CLOUDINARY / S3</span>
+        <span>JAVA 21</span><span>SPRING BOOT 3.4</span><span>SPRING SECURITY</span><span>REACT 19</span><span>MYSQL 8</span><span>DOCKER</span><span>RAILWAY</span>
       </div>
+      <figure class="cs-hero-shot">
+        <img src="../../assets/smart-contact-manager/dashboard.png" alt="Smart Contact Manager dashboard with contacts, stats and activity views" />
+      </figure>
     </section>
 
-    <section class="cs-metrics" aria-label="Key features">
-      <div><strong>OAuth2</strong><span>Google &amp; GitHub login, plus email/password</span></div>
-      <div><strong>Full CRUD</strong><span>create, search, favorite and manage contacts</span></div>
-      <div><strong>Cloud</strong><span>profile image storage via Cloudinary / AWS S3</span></div>
-      <div><strong>Email</strong><span>verification &amp; sending with attachments (JavaMail)</span></div>
+    <section class="cs-metrics" aria-label="Key facts">
+      <div><strong>200</strong><span>demo contacts seeded into the public Railway demo</span></div>
+      <div><strong>72</strong><span>Java files across the Spring Boot backend</span></div>
+      <div><strong>2FA</strong><span>RFC 6238 TOTP built and tested without a third-party TOTP dependency</span></div>
+      <div><strong>1 jar</strong><span>React SPA and Spring API deployed together on one origin</span></div>
     </section>
 
     <section class="cs-section">
       <p class="cs-eyebrow">OVERVIEW</p>
-      <h2>A secure, full-featured contact manager.</h2>
-      <p class="body">Smart Contact Manager lets a user register, verify their email, and securely store and organize their contacts — with profile images in the cloud, email sending built in, search and pagination, exports and a light/dark UI. I built it end to end with Spring Boot on the backend and a Thymeleaf + Tailwind interface.</p>
-      <p class="body">It was my internship project at Euonus IT during my B.Tech program, and it covers the full lifecycle of a real product: authentication, data, file uploads, third-party integrations and secured routes.</p>
+      <h2>A contact app that understands relationships, not just records.</h2>
+      <p class="body">Most contact managers stop at CRUD and search. I built Smart Contact Manager around the workflows that make a contact system useful in real life: detecting duplicates before the address book becomes messy, surfacing people you have not spoken to recently, grouping contacts by business context, and keeping reminders, notes, events and interaction history connected to each person.</p>
+      <p class="body">The project is deployed as a full-stack product. Vite builds the React frontend into Spring Boot static resources, Spring serves the app and API from the same origin, and Docker brings up the app with MySQL for a production-shaped local or hosted environment.</p>
     </section>
 
     <section class="cs-section">
-      <p class="cs-eyebrow">FEATURES</p>
-      <h2>What it does.</h2>
+      <p class="cs-eyebrow">PRODUCT DEPTH</p>
+      <h2>The features that make it more than a CRUD app.</h2>
       <div class="cs-grid3">
         <div class="cs-role">
-          <span class="tag">AUTH</span>
-          <h3>Sign-in &amp; verification</h3>
-          <p>Email/password registration plus OAuth2 login with Google and GitHub, and email verification required before first login.</p>
+          <span class="tag">DUPLICATES</span>
+          <h3>Merge without losing history</h3>
+          <p>Contacts are grouped by phone, email and normalized names. During merge, notes, reminders, events and interactions are moved onto the surviving contact.</p>
         </div>
         <div class="cs-role">
-          <span class="tag">CONTACTS</span>
-          <h3>Full contact CRUD</h3>
-          <p>Create, view, update and delete contacts, mark favorites, and browse with search and pagination.</p>
+          <span class="tag">RECONNECT</span>
+          <h3>Know who is going cold</h3>
+          <p>The reconnect view ranks contacts by how long it has been since the last interaction, with a threshold visitors can tune.</p>
         </div>
         <div class="cs-role">
-          <span class="tag">MEDIA</span>
-          <h3>Cloud image upload</h3>
-          <p>Profile and contact images uploaded to the cloud via Cloudinary / AWS S3 rather than stored on the server.</p>
+          <span class="tag">GRAPH</span>
+          <h3>Canvas relationship map</h3>
+          <p>A force-directed graph clusters contacts by tag or company, with drag, pan, zoom and profile drill-down built without D3.</p>
         </div>
         <div class="cs-role">
-          <span class="tag">EMAIL</span>
-          <h3>Email integration</h3>
-          <p>Send emails with attachments directly from the app using the JavaMail API.</p>
+          <span class="tag">AUTOMATION</span>
+          <h3>Rule-based tags</h3>
+          <p>Tags can carry rules such as company matching, and the app applies them automatically when a contact is saved.</p>
         </div>
         <div class="cs-role">
-          <span class="tag">DATA</span>
-          <h3>Export &amp; organize</h3>
-          <p>Export contact data to Excel/CSV, plus user profile management and a light/dark mode toggle.</p>
+          <span class="tag">SHARING</span>
+          <h3>Import, export and share</h3>
+          <p>CSV import/export, vCard and QR sharing, printable directories and calendar exports make the data portable.</p>
         </div>
         <div class="cs-role">
-          <span class="tag">SECURITY</span>
-          <h3>Protected routes</h3>
-          <p>Route protection and access control with Spring Security, verified through manual testing.</p>
+          <span class="tag">DEMO</span>
+          <h3>Public product demo</h3>
+          <p>The live Railway deployment includes a shared demo account with 200 seeded contacts that resets cleanly after restart.</p>
         </div>
       </div>
     </section>
 
     <section class="cs-section">
-      <p class="cs-eyebrow">ENGINEERING HIGHLIGHTS</p>
-      <h2>How it's built.</h2>
+      <p class="cs-eyebrow">SCREENSHOTS</p>
+      <h2>Important screens from the shipped app.</h2>
+      <div class="cs-shots">
+        <figure>
+          <img src="../../assets/smart-contact-manager/graph-tag.png" alt="Relationship graph clustered by tag" />
+          <figcaption><b>RELATIONSHIP GRAPH</b>Force-directed canvas layout with tag-based clustering, dragging, zooming and contact drill-down.</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/smart-contact-manager/graph-company.png" alt="Relationship graph clustered by company" />
+          <figcaption><b>COMPANY CLUSTERS</b>The same graph engine can cluster the network by company to reveal business-side relationships.</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/smart-contact-manager/duplicates.png" alt="Duplicate detection and merge workflow" />
+          <figcaption><b>DUPLICATE MERGE</b>Grouped by shared fields and merged while preserving child records and contact history.</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/smart-contact-manager/reconnect.png" alt="Reconnect list ranked by stale interactions" />
+          <figcaption><b>RECONNECT</b>Ranks stale relationships by last interaction date and separates contacts with no recorded interaction.</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/smart-contact-manager/contact-detail.png" alt="Contact detail with interactions and reminders" />
+          <figcaption><b>CONTACT DETAIL</b>Notes, interaction history, reminders and events stay connected to each contact profile.</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/smart-contact-manager/business-detail.png" alt="Business detail with linked staff" />
+          <figcaption><b>BUSINESSES</b>Companies can be managed as records with linked staff, context and relationship history.</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/smart-contact-manager/dashboard.png" alt="Smart Contact Manager dashboard" />
+          <figcaption><b>DASHBOARD</b>Search, quick stats and contact activity in a polished light/dark themed interface.</figcaption>
+        </figure>
+        <figure>
+          <img src="../../assets/smart-contact-manager/landing.png" alt="Smart Contact Manager landing page" />
+          <figcaption><b>LANDING PAGE</b>Kinetic type, marquees and a canvas constellation animation built without a UI framework.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">SECURITY</p>
+      <h2>Security work that is visible in the code.</h2>
       <ul class="cs-list">
-        <li>Spring Boot backend using Spring MVC, Spring Security and Spring Data JPA.</li>
-        <li>OAuth2 login (Google &amp; GitHub) alongside email/password with pre-login email verification.</li>
-        <li>Cloud file uploads for images through Cloudinary / AWS S3.</li>
-        <li>Transactional email with attachments via the JavaMail API.</li>
-        <li>Server-rendered UI with Thymeleaf, Tailwind CSS and Flowbite, plus JavaScript for dynamic features.</li>
-        <li>Search, pagination, favorites, CSV/Excel export and secured routes — tested manually.</li>
+        <li>TOTP two-factor authentication implemented from RFC 6238 with HMAC-SHA1, Base32 secrets and constant-time comparison.</li>
+        <li>Two-layer brute-force protection: per-account lockout plus per-IP sliding-window failure limits.</li>
+        <li>Ownership checks across contacts, notes, reminders, events and tags so users cannot access another account's records.</li>
+        <li>Upload validation checks real image magic bytes instead of trusting extensions or browser MIME types.</li>
+        <li>Hardened cookies and headers, including HttpOnly, SameSite, Secure in production, CSP, HSTS and frame protection.</li>
+        <li>BCrypt password hashing, email verification, expiring reset tokens and soft delete with scheduled purge.</li>
       </ul>
     </section>
 
     <section class="cs-section">
-      <p class="cs-eyebrow">TECH STACK</p>
-      <h2>What it's built with.</h2>
-      <div class="cs-stack">
-        <div class="row"><b>Language</b><p>Java 17+</p></div>
-        <div class="row"><b>Backend</b><p>Spring Boot — MVC, Security, Data JPA; RESTful APIs</p></div>
-        <div class="row"><b>Frontend</b><p>Thymeleaf, Tailwind CSS, Flowbite, JavaScript</p></div>
-        <div class="row"><b>Database</b><p>MySQL / PostgreSQL</p></div>
-        <div class="row"><b>Integrations</b><p>OAuth 2.0 (Google, GitHub), JavaMail API, Cloudinary / AWS S3</p></div>
-        <div class="row"><b>Tooling</b><p>Maven, Postman, Git &amp; GitHub, Docker</p></div>
-        <div class="row"><b>Context</b><p>Internship project at Euonus IT (B.Tech program)</p></div>
+      <p class="cs-eyebrow">ARCHITECTURE</p>
+      <h2>One deployable system, cleanly layered.</h2>
+      <div class="cs-flow" aria-label="Architecture flow">
+        <span>React 19 SPA</span><i>→</i>
+        <span>Vite build</span><i>→</i>
+        <span>Spring Boot static resources</span><i>→</i>
+        <span>Spring MVC + Security</span><i>→</i>
+        <span>Spring Data JPA</span><i>→</i>
+        <span>MySQL 8</span>
       </div>
+      <p class="cs-note">The frontend is compiled into the backend, so the app ships as a single Spring Boot jar on one origin. That avoids CORS setup, cross-site cookie problems and preflight overhead for normal writes.</p>
+      <div class="cs-stack">
+        <div class="row"><b>Backend</b><p>Spring Boot 3.4.4, Java 21, Spring Security, Spring Data JPA, Hibernate 6.6, Maven</p></div>
+        <div class="row"><b>Frontend</b><p>React 19, Vite 7, plain CSS custom properties, lucide-react</p></div>
+        <div class="row"><b>Database</b><p>MySQL 8 in production-shaped setup, with H2 and PostgreSQL drivers available via environment config</p></div>
+        <div class="row"><b>Auth</b><p>Session-based login, email verification, Google/GitHub OAuth2 and TOTP 2FA</p></div>
+        <div class="row"><b>Infra</b><p>Docker multi-stage build, docker-compose, Railway deployment and GitHub Actions CI</p></div>
+        <div class="row"><b>Testing</b><p>Unit tests for TOTP and recurring reminders, plus HTTP smoke tests for auth boundaries and contact workflows</p></div>
+      </div>
+      <p class="cs-note">The UI is intentionally custom-built rather than assembled from a component framework, including the relationship graph, landing-page constellation animation and resizable app panes.</p>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">IMPLEMENTATION DETAILS</p>
+      <h2>Engineering choices worth discussing.</h2>
+      <ul class="cs-list">
+        <li><strong>Duplicate merging:</strong> union-find groups duplicate candidates, then re-parents child records before deleting the duplicate contact.</li>
+        <li><strong>Relationship graph:</strong> hand-built canvas physics with node repulsion, spring attraction, damping, drag, pan and zoom.</li>
+        <li><strong>Reminder scheduling:</strong> recurring reminder roll-forward logic handles overdue reminders by skipping ahead correctly.</li>
+        <li><strong>Demo seeding:</strong> public demo mode creates a resettable 200-contact account, while new signups can receive a 24-contact starter set.</li>
+        <li><strong>Portable configuration:</strong> database, cookie, OAuth, mail and demo settings are all environment-driven.</li>
+        <li><strong>Production shape:</strong> Docker starts MySQL, backend and frontend together, and CI builds frontend, backend and Docker image.</li>
+      </ul>
     </section>
 
     <section class="cs-foot">
-      <h2>Take a look.</h2>
+      <h2>Explore the product.</h2>
       <div class="cs-cta">
-        <a class="cs-btn solid" href="https://github.com/shivanshagarwal10/smart-contact-manager" target="_blank" rel="noreferrer">View source on GitHub ↗</a>
-        <a class="cs-btn ghost" href="../../index.html#work">See other work →</a>
+        <a class="cs-btn solid" href="https://smart-contact-manager-production-9f25.up.railway.app" target="_blank" rel="noreferrer">Open live demo ↗</a>
+        <a class="cs-btn ghost" href="https://github.com/shivanshagarwal10/smart-contact-manager" target="_blank" rel="noreferrer">Read the code ↗</a>
       </div>
     </section>
   </main>
@@ -185,7 +266,7 @@
   <footer class="footer section-shell">
     <a href="../../index.html">← Back to portfolio</a>
     <p>© <span data-year></span> Shivansh Agarwal</p>
-    <p>Smart Contact Manager — Case Study</p>
+    <p>Smart Contact Manager - Case Study</p>
   </footer>
 
   <script>document.querySelectorAll('[data-year]').forEach(n => n.textContent = new Date().getFullYear());</script>

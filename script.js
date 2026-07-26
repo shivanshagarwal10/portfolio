@@ -80,11 +80,11 @@ const projects = {
     stack: 'FastAPI, WebSockets, React Native, Expo, AssemblyAI, LLMs, Python'
   },
   contactpay: {
-    kicker: 'CASE STUDY 04 / JAVA APPLICATION',
-    title: 'Payment & Contact Manager',
-    summary: 'A Java and Spring Boot application that combines contact-management workflows with secure transaction records for faster, clearer daily operations.',
-    metrics: [['70%', 'less manual record-keeping through contact CRUD workflows'], ['40%', 'faster transaction completion through integrated payment features']],
-    stack: 'Java, Spring Boot, Hibernate, Maven, MySQL, REST APIs'
+    kicker: 'CASE STUDY 04 / FULL-STACK PRODUCT',
+    title: 'Smart Contact Manager',
+    summary: 'A Spring Boot and React contact intelligence platform with duplicate merging, reconnect workflows, relationship graphs, TOTP 2FA, OAuth and a resettable public demo.',
+    metrics: [['200', 'seeded contacts in the live Railway demo'], ['2FA', 'RFC 6238 TOTP built and tested without a third-party TOTP dependency'], ['1 jar', 'React SPA and Spring Boot API deployed together on one origin']],
+    stack: 'Java 21, Spring Boot 3.4, Spring Security, React 19, Vite, Spring Data JPA, Hibernate, MySQL 8, Docker, Railway'
   }
 };
 
