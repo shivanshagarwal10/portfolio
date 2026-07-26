@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Case study: Smart Contact Manager by Shivansh Agarwal — a full-stack Spring Boot app to manage personal and professional contacts with OAuth2 login, email verification, cloud image storage, email sending, search, export and dark mode. Built during the Euonus IT internship." />
+  <meta name="author" content="Shivansh Agarwal" />
+  <meta name="theme-color" content="#f5f1e8" />
+  <title>Smart Contact Manager — Case Study · Shivansh Agarwal</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Smart Contact Manager — Case Study · Shivansh Agarwal" />
+  <meta property="og:description" content="A full-stack Spring Boot contact manager: OAuth2 login, email verification, Cloudinary/S3 image upload, JavaMail email sending, search, export and dark mode." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Smart Contact Manager — Case Study · Shivansh Agarwal" />
+
+  <link rel="stylesheet" href="../../styles.css" />
+  <style>
+    .cs-main{width:var(--shell);margin-inline:auto}
+    .cs-back{display:inline-flex;align-items:center;gap:8px;margin:26px 0 0;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-underline-offset:6px}
+    .cs-back:hover{text-decoration:underline}
+    .cs-hero{padding:34px 0 56px;border-bottom:2px solid var(--ink)}
+    .cs-kicker{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--orange);margin:0 0 18px}
+    .cs-hero h1{font-size:clamp(42px,7.4vw,104px);line-height:.9;letter-spacing:-.05em;margin:0}
+    .cs-lead{font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,2.1vw,29px);line-height:1.32;max-width:920px;margin:26px 0 0}
+    .cs-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+    .cs-btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 22px;font-size:11px;font-weight:800;letter-spacing:.06em;text-decoration:none;border:2px solid var(--ink);transition:transform .2s ease}
+    .cs-btn:hover{transform:translateY(-2px)}
+    .cs-btn.solid{background:var(--ink);color:var(--paper)}
+    .cs-btn.ghost{background:transparent;color:var(--ink)}
+    .cs-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}
+    .cs-tags span{font-size:9px;font-weight:800;letter-spacing:.08em;padding:9px 13px;border-radius:999px;border:1px solid var(--line);font-family:monospace}
+    .cs-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:2px solid var(--ink)}
+    .cs-metrics div{padding:40px 26px 40px 0}
+    .cs-metrics div + div{padding-left:26px;border-left:1px solid var(--line)}
+    .cs-metrics strong{display:block;font-size:clamp(30px,4.2vw,52px);letter-spacing:-.05em;line-height:.92}
+    .cs-metrics span{display:block;margin-top:10px;font-size:11px;font-weight:700;line-height:1.35;color:var(--muted)}
+    .cs-section{padding:70px 0;border-bottom:1px solid var(--line)}
+    .cs-eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;margin:0 0 22px;color:var(--muted)}
+    .cs-section h2{font-size:clamp(30px,4vw,52px);letter-spacing:-.05em;line-height:.98;margin:0 0 24px}
+    .cs-section p.body{font-family:Georgia,serif;font-size:clamp(17px,1.7vw,22px);line-height:1.45;max-width:920px;margin:0 0 16px}
+    .cs-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:14px}
+    .cs-role{border:1.5px solid var(--ink);border-radius:16px;padding:26px}
+    .cs-role h3{font-size:20px;letter-spacing:-.03em;margin:8px 0 8px}
+    .cs-role .tag{font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--orange)}
+    .cs-role p{margin:0;font-size:14.5px;line-height:1.5;font-family:Georgia,serif}
+    .cs-stack .row{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line);align-items:baseline}
+    .cs-stack .row b{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .cs-stack .row p{margin:0;font-size:15px;line-height:1.4;font-family:Georgia,serif}
+    .cs-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 40px}
+    .cs-list li{position:relative;padding-left:22px;font-size:15.5px;line-height:1.45}
+    .cs-list li::before{content:"✦";position:absolute;left:0;color:var(--orange)}
+    .cs-foot{padding:70px 0 90px;text-align:center}
+    .cs-foot h2{font-size:clamp(34px,6vw,74px);letter-spacing:-.05em;line-height:.9;margin:0 0 30px}
+    .cs-foot .cs-cta{justify-content:center}
+    @media(max-width:900px){
+      .cs-metrics{grid-template-columns:repeat(2,1fr)}
+      .cs-metrics div,.cs-metrics div + div{border-left:0;padding:28px 18px}
+      .cs-grid3{grid-template-columns:1fr}.cs-stack .row{grid-template-columns:1fr;gap:4px}.cs-list{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar" id="top">
+    <a class="identity" href="../../index.html" aria-label="Shivansh Agarwal home">
+      <span class="identity-mark" aria-hidden="true">S</span>
+      <span>SHIVANSH AGARWAL</span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="../../index.html#work">WORK</a>
+      <a href="../../index.html#about">ABOUT</a>
+      <a href="../../index.html#experience">EXPERIENCE</a>
+      <a href="../../index.html#contact">CONTACT</a>
+      <a href="https://github.com/shivanshagarwal10/smart-contact-manager" target="_blank" rel="noreferrer">GITHUB ↗</a>
+    </nav>
+    <div class="top-location"><span>✦ CASE STUDY</span><span>04 / 04</span></div>
+  </header>
+
+  <main class="cs-main">
+    <a class="cs-back" href="../../index.html#work">← Back to all work</a>
+
+    <section class="cs-hero">
+      <p class="cs-kicker">CASE STUDY 04 — FULL-STACK JAVA APP</p>
+      <h1>Smart Contact Manager</h1>
+      <p class="cs-lead">A full-stack web application for managing personal and professional contacts — with secure authentication, cloud image storage, email integration and a modern UI. Built with Spring Boot during my internship at Euonus IT as part of my B.Tech program.</p>
+      <div class="cs-cta">
+        <a class="cs-btn solid" href="https://github.com/shivanshagarwal10/smart-contact-manager" target="_blank" rel="noreferrer">View source on GitHub ↗</a>
+        <a class="cs-btn ghost" href="../../index.html#contact">Get in touch →</a>
+      </div>
+      <div class="cs-tags">
+        <span>JAVA 17</span><span>SPRING BOOT</span><span>SPRING SECURITY</span><span>SPRING DATA JPA</span><span>OAUTH2</span><span>THYMELEAF</span><span>TAILWIND CSS</span><span>MYSQL</span><span>JAVAMAIL</span><span>CLOUDINARY / S3</span>
+      </div>
+    </section>
+
+    <section class="cs-metrics" aria-label="Key features">
+      <div><strong>OAuth2</strong><span>Google &amp; GitHub login, plus email/password</span></div>
+      <div><strong>Full CRUD</strong><span>create, search, favorite and manage contacts</span></div>
+      <div><strong>Cloud</strong><span>profile image storage via Cloudinary / AWS S3</span></div>
+      <div><strong>Email</strong><span>verification &amp; sending with attachments (JavaMail)</span></div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">OVERVIEW</p>
+      <h2>A secure, full-featured contact manager.</h2>
+      <p class="body">Smart Contact Manager lets a user register, verify their email, and securely store and organize their contacts — with profile images in the cloud, email sending built in, search and pagination, exports and a light/dark UI. I built it end to end with Spring Boot on the backend and a Thymeleaf + Tailwind interface.</p>
+      <p class="body">It was my internship project at Euonus IT during my B.Tech program, and it covers the full lifecycle of a real product: authentication, data, file uploads, third-party integrations and secured routes.</p>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">FEATURES</p>
+      <h2>What it does.</h2>
+      <div class="cs-grid3">
+        <div class="cs-role">
+          <span class="tag">AUTH</span>
+          <h3>Sign-in &amp; verification</h3>
+          <p>Email/password registration plus OAuth2 login with Google and GitHub, and email verification required before first login.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">CONTACTS</span>
+          <h3>Full contact CRUD</h3>
+          <p>Create, view, update and delete contacts, mark favorites, and browse with search and pagination.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">MEDIA</span>
+          <h3>Cloud image upload</h3>
+          <p>Profile and contact images uploaded to the cloud via Cloudinary / AWS S3 rather than stored on the server.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">EMAIL</span>
+          <h3>Email integration</h3>
+          <p>Send emails with attachments directly from the app using the JavaMail API.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">DATA</span>
+          <h3>Export &amp; organize</h3>
+          <p>Export contact data to Excel/CSV, plus user profile management and a light/dark mode toggle.</p>
+        </div>
+        <div class="cs-role">
+          <span class="tag">SECURITY</span>
+          <h3>Protected routes</h3>
+          <p>Route protection and access control with Spring Security, verified through manual testing.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">ENGINEERING HIGHLIGHTS</p>
+      <h2>How it's built.</h2>
+      <ul class="cs-list">
+        <li>Spring Boot backend using Spring MVC, Spring Security and Spring Data JPA.</li>
+        <li>OAuth2 login (Google &amp; GitHub) alongside email/password with pre-login email verification.</li>
+        <li>Cloud file uploads for images through Cloudinary / AWS S3.</li>
+        <li>Transactional email with attachments via the JavaMail API.</li>
+        <li>Server-rendered UI with Thymeleaf, Tailwind CSS and Flowbite, plus JavaScript for dynamic features.</li>
+        <li>Search, pagination, favorites, CSV/Excel export and secured routes — tested manually.</li>
+      </ul>
+    </section>
+
+    <section class="cs-section">
+      <p class="cs-eyebrow">TECH STACK</p>
+      <h2>What it's built with.</h2>
+      <div class="cs-stack">
+        <div class="row"><b>Language</b><p>Java 17+</p></div>
+        <div class="row"><b>Backend</b><p>Spring Boot — MVC, Security, Data JPA; RESTful APIs</p></div>
+        <div class="row"><b>Frontend</b><p>Thymeleaf, Tailwind CSS, Flowbite, JavaScript</p></div>
+        <div class="row"><b>Database</b><p>MySQL / PostgreSQL</p></div>
+        <div class="row"><b>Integrations</b><p>OAuth 2.0 (Google, GitHub), JavaMail API, Cloudinary / AWS S3</p></div>
+        <div class="row"><b>Tooling</b><p>Maven, Postman, Git &amp; GitHub, Docker</p></div>
+        <div class="row"><b>Context</b><p>Internship project at Euonus IT (B.Tech program)</p></div>
+      </div>
+    </section>
+
+    <section class="cs-foot">
+      <h2>Take a look.</h2>
+      <div class="cs-cta">
+        <a class="cs-btn solid" href="https://github.com/shivanshagarwal10/smart-contact-manager" target="_blank" rel="noreferrer">View source on GitHub ↗</a>
+        <a class="cs-btn ghost" href="../../index.html#work">See other work →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer section-shell">
+    <a href="../../index.html">← Back to portfolio</a>
+    <p>© <span data-year></span> Shivansh Agarwal</p>
+    <p>Smart Contact Manager — Case Study</p>
+  </footer>
+
+  <script>document.querySelectorAll('[data-year]').forEach(n => n.textContent = new Date().getFullYear());</script>
+</body>
+</html>
