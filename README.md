@@ -69,6 +69,35 @@ Case study: `work/smart-contact-manager/index.html`
 Live demo: https://smart-contact-manager-production-9f25.up.railway.app/  
 Source: https://github.com/shivanshagarwal10/smart-contact-manager
 
+### TRAO Interview Prep
+
+An evidence-backed AI interview preparation workspace that turns a job description, company URL and preparation window into a complete, editable plan.
+
+- Next.js and TypeScript frontend with an Express backend
+- Gemini-powered generation with Zod validation and bounded repair
+- Company research through a bounded, SSRF-aware crawler
+- Deterministic requirement coverage and gap closure
+- Editable questions, schedules and flashcard practice
+- MongoDB persistence with secure owner-scoped sessions
+
+Case study: `work/trao-interview-prep/index.html`
+Live site: https://trao-interview-prep-lemon.vercel.app/
+Source: https://github.com/shivanshagarwal10/trao-interview-prep
+
+### Voice AI Evals
+
+A hybrid evaluation framework for post-due Voice AI collection calls, from individual-call evidence to campaign-level root-cause analysis.
+
+- Deterministic evaluation of latency, silence and connectivity
+- LLM evaluation of outcomes, conversation stages and compliance
+- Transcript evidence attached to semantic failures
+- Golden-dataset validation workflow
+- Streamlit and Plotly campaign dashboard
+- 10,000-call synthetic campaign demonstration
+
+Case study: `work/voice-ai-evals/index.html`
+Source: https://github.com/shivanshagarwal10/voice-ai-evals
+
 ## Design And UX
 
 - Editorial single-page homepage with dedicated project case-study pages
@@ -108,6 +137,8 @@ No package manager, bundler or build command is required.
 |   |-- dainikbhaskar/
 |   |-- ai-conversation/
 |   |-- smart-contact-manager/
+|   |-- trao-interview-prep/
+|   |-- voice-ai-evals/
 |   |-- payment-contact-manager/
 |-- about/
 |-- contact/
