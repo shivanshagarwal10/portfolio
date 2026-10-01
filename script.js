@@ -55,6 +55,10 @@ if (cursor && matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-redu
     node.addEventListener('pointerenter', () => cursor.classList.add('link'));
     node.addEventListener('pointerleave', () => cursor.classList.remove('link'));
   });
+  document.querySelectorAll('.case-copy').forEach(node => {
+    node.addEventListener('pointerenter', () => cursor.classList.add('copy-safe'));
+    node.addEventListener('pointerleave', () => cursor.classList.remove('copy-safe'));
+  });
 }
 
 const projects = {

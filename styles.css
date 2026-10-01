@@ -47,7 +47,7 @@ a{color:inherit}button,a{-webkit-tap-highlight-color:transparent}button{font:inh
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.numbers-track{animation:none}.cursor{display:none}}
 
 /* Final layout refinements */
-.case-grid .case-copy button,.case-grid .case-copy a.case-study-link{position:static;margin-top:16px}
+.case-grid .case-copy button,.case-grid .case-copy a.case-study-link{position:static;display:inline-flex;align-items:center;line-height:1;margin-top:18px}
 @media(max-width:720px){
   .section-heading{display:block}
   .section-heading h2{white-space:nowrap}
@@ -65,6 +65,7 @@ a{color:inherit}button,a{-webkit-tap-highlight-color:transparent}button{font:inh
 /* Magnify featured-work visuals on hover (pairs with the EXPLORE cursor) */
 .case-visual{transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .55s ease}
 .case-card:hover .case-visual,.case-card:focus-visible .case-visual{transform:scale(1.03);box-shadow:0 44px 90px rgba(0,0,0,.26);z-index:6}
+.cursor.copy-safe{opacity:0!important}
 @media(max-width:720px){.case-card:hover .case-visual,.case-card:focus-visible .case-visual{transform:none;box-shadow:none}}
 @media(prefers-reduced-motion:reduce){.case-visual{transition:none}.case-card:hover .case-visual{transform:none;box-shadow:none}}
 
